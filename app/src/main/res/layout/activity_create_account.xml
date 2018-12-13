@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:hapticFeedbackEnabled="false"
+    android:orientation="vertical"
+    tools:context=".CreateAccount">
+
+    <EditText
+        android:id="@+id/etFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/primary_light"
+        android:gravity="center_horizontal"
+        android:hint="@string/enter_first_name"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:inputType=""
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/etLast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/primary_light"
+        android:gravity="center_horizontal"
+        android:hint="@string/enter_last_name"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:inputType=""
+        android:importantForAutofill="no" />
+
+    <!--<EditText-->
+        <!--android:id="@+id/eTBirthday"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:background="@color/primary_light"-->
+        <!--android:ems="10"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:hint="Enter Birthday"-->
+        <!--android:inputType="date"-->
+        <!--android:textSize="24sp" />-->
+
+    <Button
+        android:id="@+id/btnBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="70dp"
+        android:background="@color/primary_dark"
+        android:onClick="setDate"
+        android:text="@string/set_birthday"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/date_selected"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/primary_dark"
+        android:text="Submit"
+        android:textSize="18sp" />
+
+</LinearLayout>
