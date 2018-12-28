@@ -91,4 +91,8 @@
     <string name="enter_first_name">Enter First Name</string>
     <string name="enter_last_name">Enter Last Name</string>
     <string name="total_balance"><u>Total Balance</u></string>
+    <string name="title_activity_lol">lol</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

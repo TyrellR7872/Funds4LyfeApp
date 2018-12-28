@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateAccount" />
-        <activity android:name=".TransactionActivity"></activity>
+        <activity android:name=".TransactionActivity" />
+        <activity android:name=".TransferActivity" />
+        <activity android:name=".ViewUser" />
     </application>
 
 </manifest>
