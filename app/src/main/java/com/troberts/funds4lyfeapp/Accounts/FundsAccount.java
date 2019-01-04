@@ -1,5 +1,10 @@
 package com.troberts.funds4lyfeapp.Accounts;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -7,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FundsAccount {
+public class FundsAccount implements Serializable {
     private Map<String,Account> accounts;
     private BigDecimal fundsTotal;
 
@@ -79,6 +84,10 @@ public class FundsAccount {
 
     public List<String> getAccountNames(){
         return new ArrayList<>(accounts.keySet());
+    }
+
+    public ArrayList<Account> getAccounts(){
+        return new ArrayList<>(accounts.values());
     }
 
 

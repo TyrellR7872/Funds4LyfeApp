@@ -3,8 +3,12 @@ package com.troberts.funds4lyfeapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -22,11 +26,14 @@ import com.troberts.funds4lyfeapp.Accounts.UserAccount;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class MainPage extends AppCompatActivity {
     UserAccount userAccount;
     SharedPreferences prefs;
+    RecyclerView recyclerView;
+    AccountAdapter adapter;
 
 
     final Gson gson = new Gson();
@@ -35,6 +42,7 @@ public class MainPage extends AppCompatActivity {
 
     ImageView ivBalBackground;
     Button btnDeposit, btnWithdraw, btnTransfer, btnRefresh;
+
 
     final int ACCOUNT = 1;
     final int TRANSACTION = 2;
@@ -53,6 +61,10 @@ public class MainPage extends AppCompatActivity {
         btnWithdraw = findViewById(R.id.btnWithdraw);
         btnTransfer = findViewById(R.id.btnTransfer);
         btnRefresh = findViewById(R.id.btnRefresh);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
         tvBalance.setSelected(true);
 
 
@@ -158,6 +170,8 @@ public class MainPage extends AppCompatActivity {
                     Bundle extras = data.getExtras();
                     String userAccountJson = extras.getString("userAccount");
                     userAccount = gson.fromJson(userAccountJson, UserAccount.class);
+                    adapter = new AccountAdapter(this,userAccount.getAccounts());
+                    recyclerView.setAdapter(adapter);
                     Toast.makeText(MainPage.this, "User Account Updated successfully", Toast.LENGTH_SHORT).show();
                     showSaveBalance();
                 } else if (resultCode == RESULT_CANCELED) {
@@ -175,6 +189,7 @@ public class MainPage extends AppCompatActivity {
                     } else {
                         userAccount.withdraw(accountType, amount);
                     }
+
                     showSaveBalance();
                 } else if (resultCode == RESULT_CANCELED) {
                     Toast.makeText(MainPage.this, "No results received", Toast.LENGTH_SHORT).show();
@@ -213,11 +228,14 @@ public class MainPage extends AppCompatActivity {
         } else {
             String userAccountJson = prefs.getString("userAccount", "");
             userAccount = gson.fromJson(userAccountJson, UserAccount.class);
+            adapter = new AccountAdapter(this,userAccount.getAccounts());
+            recyclerView.setAdapter(adapter);
 
             showSaveBalance();
 
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
