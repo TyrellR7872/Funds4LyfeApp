@@ -26,23 +26,20 @@ import com.troberts.funds4lyfeapp.Accounts.UserAccount;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 
 public class MainPage extends AppCompatActivity {
     UserAccount userAccount;
     SharedPreferences prefs;
-    RecyclerView recyclerView;
-    AccountAdapter adapter;
 
-
-    final Gson gson = new Gson();
+    Gson gson = new Gson();
 
     TextView tvBalancetext, tvBalance;
-
     ImageView ivBalBackground;
+    RecyclerView recyclerView;
     Button btnDeposit, btnWithdraw, btnTransfer, btnRefresh;
 
+    AccountAdapter adapter;
 
     final int ACCOUNT = 1;
     final int TRANSACTION = 2;
@@ -55,20 +52,20 @@ public class MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
 
         tvBalancetext = findViewById(R.id.tvBalanceText);
-        tvBalance = findViewById(R.id.tvBalance);
         ivBalBackground = findViewById(R.id.ivBalBackground);
+
         btnDeposit = findViewById(R.id.btnDeposit);
         btnWithdraw = findViewById(R.id.btnWithdraw);
         btnTransfer = findViewById(R.id.btnTransfer);
         btnRefresh = findViewById(R.id.btnRefresh);
+
         recyclerView = findViewById(R.id.recyclerView);
+
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
+        tvBalance = findViewById(R.id.tvBalance);
         tvBalance.setSelected(true);
-
-
-
         SpannableString content = new SpannableString(tvBalancetext.getText().toString().trim());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         tvBalancetext.setText(content);
@@ -98,8 +95,6 @@ public class MainPage extends AppCompatActivity {
 
 
 
-
-
         btnDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +115,8 @@ public class MainPage extends AppCompatActivity {
                 if (userAccount.getAccountNames().size() < 2){
                     Toast.makeText(MainPage.this, "Please make sure you have at least 2 accounts", Toast.LENGTH_SHORT).show();
                     userAccount.createAccount("CHECKING",50);
+                    adapter.notifyDataSetChanged();
+
                     showSaveBalance();
                 }else {
                     Intent intent = new Intent(MainPage.this, TransferActivity.class);
@@ -170,7 +167,7 @@ public class MainPage extends AppCompatActivity {
                     Bundle extras = data.getExtras();
                     String userAccountJson = extras.getString("userAccount");
                     userAccount = gson.fromJson(userAccountJson, UserAccount.class);
-                    adapter = new AccountAdapter(this,userAccount.getAccounts());
+                    adapter = new AccountAdapter(this,userAccount.getAccounts(),userAccount.getAccountNames());
                     recyclerView.setAdapter(adapter);
                     Toast.makeText(MainPage.this, "User Account Updated successfully", Toast.LENGTH_SHORT).show();
                     showSaveBalance();
@@ -178,6 +175,7 @@ public class MainPage extends AppCompatActivity {
                     Toast.makeText(MainPage.this, "No results received", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
             case TRANSACTION:
                 if (resultCode == RESULT_OK) {
                     Bundle extras = data.getExtras();
@@ -196,6 +194,7 @@ public class MainPage extends AppCompatActivity {
                 }
 
                 break;
+
             case TRANSFER:
                 if (resultCode == RESULT_OK){
                     Bundle extras = data.getExtras();
@@ -228,7 +227,7 @@ public class MainPage extends AppCompatActivity {
         } else {
             String userAccountJson = prefs.getString("userAccount", "");
             userAccount = gson.fromJson(userAccountJson, UserAccount.class);
-            adapter = new AccountAdapter(this,userAccount.getAccounts());
+            adapter = new AccountAdapter(this,userAccount.getAccounts(),userAccount.getAccountNames());
             recyclerView.setAdapter(adapter);
 
             showSaveBalance();

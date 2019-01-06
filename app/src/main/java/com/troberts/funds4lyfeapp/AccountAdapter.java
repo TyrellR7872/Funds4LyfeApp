@@ -15,15 +15,17 @@ import java.util.ArrayList;
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHolder> {
 
     private ArrayList<Account> accounts;
+    private ArrayList<String> accountNames;
     private Context context;
 
     public interface ItemClicked {
         void onItemClicked(int i);
     }
 
-    public AccountAdapter(Context context, ArrayList<Account> list){
+    public AccountAdapter(Context context, ArrayList<Account> accounts, ArrayList<String> accountNames){
         this.context = context;
-        accounts = list;
+        this.accounts = accounts;
+        this.accountNames = accountNames;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +62,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
 
         viewHolder.itemView.setTag(accounts.get(i));
 
-        viewHolder.tvName.setText(accounts.get(i).toString());
+        viewHolder.tvName.setText(accountNames.get(i));
     }
 
     @Override

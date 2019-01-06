@@ -82,7 +82,7 @@ public class FundsAccount implements Serializable {
 
     }
 
-    public List<String> getAccountNames(){
+    public ArrayList<String> getAccountNames(){
         return new ArrayList<>(accounts.keySet());
     }
 

@@ -11,6 +11,5 @@ public class ViewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
 
-        Toast.makeText(ViewUser.this,"Here we are, now again",Toast.LENGTH_SHORT).show();
     }
 }
